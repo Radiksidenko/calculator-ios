@@ -10,61 +10,54 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    
-    ////////////////////////////
-    @IBOutlet var testButtonUI: UIButton!
-    ////////////////////////////
-    
-    
-    
     @IBOutlet weak var testField: UITextField!
     var currentNuber: Int = 0
     
     var action:String? //var action:String = ""
 
+    var number:String = ""
+    
     @IBAction func celarBut(_ sender: Any) {
         testField.text = ""
+        number = ""
     }
     @IBAction func clearLast(_ sender: Any) {
         testField.text = String (describing:
-         testField.text?.dropLast() ?? "")
+        testField.text?.dropLast() ?? "")
+        number.remove(at: number.index(before: number.endIndex))
     }
     
     
     @IBAction func equal(_ sender: Any) {
-        if(action == "plus"){
-            testField.text = String (fetcText() + currentNuber)
-        }else if(action == "minus"){
-            testField.text = String (currentNuber - fetcText())
+        if(action == "+"){
+            testField.text=testField.text! + "=" + String(currentNuber + (Int(number) ?? 0))
+        }else if(action == "-"){
+//            testField.text = String (currentNuber - fetcText())
+            testField.text=testField.text! + "=" + String(currentNuber - (Int(number) ?? 0))
+        }else if(action == "*"){
+            testField.text=testField.text! + "=" + String(currentNuber * (Int(number) ?? 0))
+        }else if(action == "/"){
+            testField.text=testField.text! + "=" + String(currentNuber / (Int(number) ?? 0))
         }
         
     }
-    @IBAction func plus(_ sender: Any) {
-        currentNuber = fetcText()
-        testField.text = ""
-        action = "plus"
+    
+    @IBAction func operatorCalcu(_ sender: UIButton) {
+        currentNuber = (Int(number) ?? 0)
+        testField.text = testField.text! + sender.currentTitle!
+        number = ""
+        action = sender.currentTitle!
     }
     
-    @IBAction func minus(_ sender: Any) {
-        currentNuber = fetcText()
-        testField.text = ""
-        action = "minus"
-    }
     
-    func fetcText() -> Int{
-        if let currentTitle = testField.text,
-            let number = Int (currentTitle){
-            return number
-        }
-        return 0
-    }
     
     @IBAction func buttonPresed1(_ sender: UIButton!){
         let currentDigit = sender.currentTitle
-        
+        number = (number ?? "") +  (currentDigit ?? "")
         if let currentTitle = testField.text{
             let appendDigit = currentTitle + currentDigit!
             testField.text = appendDigit
+            //forBugLabel.text = String((Int(number) ?? 0)+4)
         }
     }
     
@@ -76,6 +69,12 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    func fetcText() -> Int{
+        if let currentTitle = testField.text,
+            let number = Int (currentTitle){
+            return number
+        }
+        return 0
+    }
 
 }
