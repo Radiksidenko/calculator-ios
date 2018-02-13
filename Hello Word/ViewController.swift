@@ -11,6 +11,9 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var testField: UITextField!
+    
+    @IBOutlet weak var labteForDebug: UILabel!
+    
     var currentNuber: Int = 0
     
     var action:String? //var action:String = ""
@@ -29,15 +32,20 @@ class ViewController: UIViewController {
     
     
     @IBAction func equal(_ sender: Any) {
+        labteForDebug.text = String(currentNuber) + "; " +  number
         if(action == "+"){
             testField.text=testField.text! + "=" + String(currentNuber + (Int(number) ?? 0))
+            number = String(currentNuber + Int(number)!)
         }else if(action == "-"){
 //            testField.text = String (currentNuber - fetcText())
             testField.text=testField.text! + "=" + String(currentNuber - (Int(number) ?? 0))
+            number = String(currentNuber - Int(number)!)
         }else if(action == "*"){
             testField.text=testField.text! + "=" + String(currentNuber * (Int(number) ?? 0))
+            number = String(currentNuber * Int(number)!)
         }else if(action == "/"){
             testField.text=testField.text! + "=" + String(currentNuber / (Int(number) ?? 0))
+            number = String(currentNuber / Int(number)!)
         }
         
     }
@@ -69,12 +77,12 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func fetcText() -> Int{
-        if let currentTitle = testField.text,
-            let number = Int (currentTitle){
-            return number
-        }
-        return 0
-    }
+//    func fetcText() -> Int{
+//        if let currentTitle = testField.text,
+//            let number = Int (currentTitle){
+//            return number
+//        }
+//        return 0
+//    }
 
 }
